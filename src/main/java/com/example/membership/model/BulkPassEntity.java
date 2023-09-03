@@ -1,6 +1,7 @@
 package com.example.membership.model;
 
 import com.example.membership.status.BulkPassStatus;
+import com.example.membership.status.PassStatus;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -22,4 +23,15 @@ public class BulkPassEntity {
 
     private LocalDateTime regDate;
     private LocalDateTime expDate;
+
+    public PassEntity convert(String userId){
+        return PassEntity.builder()
+                .packageSeq(this.packageSeq)
+                .userId(userId)
+                .status(PassStatus.READY)
+                .remainingCount(count)
+                .startedAt(regDate)
+                .expiredAt(expDate)
+                .build();
+    }
 }
